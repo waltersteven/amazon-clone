@@ -5,6 +5,7 @@ import Header from './components/layout/Header';
 import Home from './components/home/Home';
 import Checkout from './components/checkout/Checkout';
 import Login from './components/login/Login';
+import Payment from './components/payment/Payment';
 import { auth } from './firebase';
 import { useStateValue } from './StateProvider';
 
@@ -41,13 +42,15 @@ function App() {
           </Route>
           <Route path='/checkout'>
             <Header />
-
             <Checkout />
+          </Route>
+          <Route path='/payment'>
+            <Header />
+            <Payment />
           </Route>
           {/** Default route */}
           <Route path='/'>
             <Header />
-
             <Home />
           </Route>
         </Switch>
