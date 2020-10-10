@@ -7,6 +7,7 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import CurrencyFormat from 'react-currency-format';
 import { getBasketTotal } from '../../reducers/index';
 import axios from '../../axios';
+import { db } from '../../firebase';
 
 const Payment = () => {
   const history = useHistory();
@@ -51,9 +52,19 @@ const Payment = () => {
       })
       .then(({ paymentIntent }) => {
         // paymentIntent makes reference to Payment Confirmation
+        db.collection('users').doc(user?.uid).collection('orders').doc(paymentIntent.id).set({
+          basket: basket,
+          amount: paymentIntent.amount,
+          created: paymentIntent.created,
+        });
+
         setSucceeded(true);
         setError(null);
         setProcessing(false);
+
+        dispatch({
+          type: 'EMPTY_BASKET',
+        });
 
         // We don't do push to prevent user from returning back to payment
         history.replace('/orders');
