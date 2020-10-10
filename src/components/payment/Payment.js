@@ -37,6 +37,8 @@ const Payment = () => {
     getClientSecret();
   }, [basket]);
 
+  console.log('The client secret is >>>', clientSecret);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setProcessing(true);
@@ -89,6 +91,7 @@ const Payment = () => {
             {/** Products */}
             {basket.map((item) => (
               <CheckoutProduct
+                key={item.id}
                 id={item.id}
                 title={item.title}
                 image={item.image}
